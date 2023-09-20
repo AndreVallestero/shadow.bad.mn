@@ -1,7 +1,7 @@
 {
   "name": "Shadow Badminton",
   "short_name": "Shadow Badminton",
-  "start_url": "https://shadow.bad.mn"
+  "start_url": "https://shadow.bad.mn",
   "icons": [{
       "src": "assets/logo144x144.png",
       "sizes": "762x762",
