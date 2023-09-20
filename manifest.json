@@ -13,6 +13,6 @@
     }],
   "orientation": "portrait" ,
   "background_color": "#222",
-  "display": "fullscreen",
+  "display": "standalone",
   "theme_color": "#222"
 }
