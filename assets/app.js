@@ -14,3 +14,34 @@ intervalSlider.addEventListener("input", () => {
 randomDelaySlider.addEventListener("input", () => {
     randomDelayValue.textContent = randomDelaySlider.value + "ms";
 });
+
+// JavaScript in your HTML file or in an external script
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  // Display a button or UI element to trigger the prompt
+  showInstallButton();
+});
+
+function showInstallButton() {
+  const installButton = document.getElementById('install-button');
+
+  if (installButton) {
+    installButton.style.display = 'block';
+
+    installButton.addEventListener('click', () => {
+      // Show the installation prompt
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the A2HS prompt');
+          }
+          deferredPrompt = null;
+        });
+      }
+    });
+  }
+}
