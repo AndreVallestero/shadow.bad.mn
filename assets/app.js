@@ -26,8 +26,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 function showInstallButton() {
-  const installButton = document.getElementById('install-button');
-
   if (installButton) {
     installButton.style.display = 'block';
 
