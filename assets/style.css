@@ -1,0 +1,54 @@
+html, body {
+  background-color: #222;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+  overflow: hidden;
+  color: #fff;
+  font-family: Helvetica, Arial, sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#controls {
+  text-align: center;
+  display: inline-block;
+}
+
+#controls > img {
+  width: 10rem;
+  height: 10rem;
+}
+
+#settings {
+  display: table;
+}
+
+#settings > * {
+  display: table-row;
+  text-align: center;
+}
+
+#settings > div > * {
+  display: table-cell;
+  vertical-align: middle;
+  margin: .5rem 1rem;
+}
+
+#settings > div > :first-child {
+  text-align: right;
+}
+
+#settings > div > :last-child {
+  text-align: left;
+}
+
+#startButton {
+  margin: .5rem;
+  width: 33%;
+  height: 2rem;
+}
