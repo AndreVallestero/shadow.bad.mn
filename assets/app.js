@@ -89,8 +89,9 @@ function countdownLoop() {
   context.font = fontSize + "px sans-serif";
   context.fillStyle = "#fff";
   context.textAlign = "center";
+  context.textBaseline = "middle";
   const countdownText = countdown > 0 ? countdown : "GO";
-  context.fillText(countdownText, canvas.width / 2, canvas.height / 2 + fontSize / 3);
+  context.fillText(countdownText, canvas.width / 2, canvas.height / 2);
 }
 
 function calloutLoop() {
@@ -103,20 +104,17 @@ function calloutLoop() {
   // schedule next loop
   const interval = parseInt(intervalSlider.value);
   const randomDelay = Math.floor(Math.random() * parseInt(randomDelaySlider.value));
-  setTimeout(calloutLoop, interval + randomDelay);
+  const totalDelay = interval + randomDelay;
+  setTimeout(calloutLoop, totalDelay);
+  setTimeout(clearCanvas, totalDelay * .8);
 
   const callout = Math.floor(Math.random() * 9);
 
   // play sound
   if (textToSpeechCheckbox.checked) audio[callout].play();
   
-  // clear old rect
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  context.fillStyle = "#000";
-	context.fillRect(0, 0, canvas.width, canvas.height);
-
   // show new rect
+  clearCanvas();
   const squareWidth = canvas.width / 3;
   const squareHeight = canvas.height / 3;
   const xOffset = squareWidth * (callout % 3);
@@ -130,7 +128,15 @@ function calloutLoop() {
   context.font = fontSize + "px sans-serif";
   context.fillStyle = "#000";
   context.textAlign = "center";
-  context.fillText(calloutText[callout], xOffset + squareWidth / 2, yOffset + squareHeight / 1.55);
+  context.textBaseline = "middle";
+  context.fillText(calloutText[callout], xOffset + squareWidth / 2, yOffset + squareHeight / 2);
+}
+
+function clearCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  context.fillStyle = "#000";
+	context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function end() {
