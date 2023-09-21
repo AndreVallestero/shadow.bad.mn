@@ -61,9 +61,10 @@ const calloutText = ["FL", "F", "FR", "L", "C", "R", "BL", "B", "BR"];
 let running = false;
 let endTime, countdown, countdownInterval;
 const context = canvas.getContext('2d');
-function start() {
+async function start() {
   running = true;
   canvas.style.display = 'block';
+  await openFullscreen();
   endTime = new Date().getTime() + parseInt(timeLimitSlider.value) * 1000;
   countdown = 1 + parseInt(countdownSlider.value);
   countdownLoop();
@@ -144,4 +145,30 @@ function clearCanvas() {
 function end() {
   running = false
   canvas.style.display = 'none';
+  closeFullscreen();
 }
+
+/* Get the documentElement (<html>) to display the page in fullscreen */
+var elem = document.documentElement;
+
+/* View in fullscreen */
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    return elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    return elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    return elem.msRequestFullscreen();
+  }
+}
+
+/* Close fullscreen */
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+} 
