@@ -89,7 +89,8 @@ function countdownLoop() {
   context.font = fontSize + "px sans-serif";
   context.fillStyle = "#fff";
   context.textAlign = "center";
-  context.fillText(countdown, canvas.width / 2, canvas.height / 2 + fontSize / 2);
+  const countdownText = countdown > 1 ? countdown : "GO";
+  context.fillText(countdownText, canvas.width / 2, canvas.height / 2 + fontSize / 2);
 }
 
 function calloutLoop() {
