@@ -39,17 +39,18 @@
             <span id="randomDelayValue">0ms</span>
         </div>
         <div>
-            <label>Finish Alarm</label>
-            <input type="checkbox" id="finishAlarmCheckbox">
+            <label>Text to Speech</label>
+            <input type="checkbox" id="textToSpeechCheckbox" value="true">
         </div>
         <div>
-            <label>Text to Speech</label>
-            <input type="checkbox" id="textToSpeechCheckbox">
+            <label>Start/End Whistle</label>
+            <input type="checkbox" id="startEndWhistleCheckbox" value="true">
         </div>
       </div>
       <button id="startButton">Start</button>
     </div>
-    <button id="installButton" style="display: none;">Add to Homescreen</button>
+    <canvas id="canvas" style="display: none" onclick="end()"></canvas>
+    <button id="installButton" style="display: none">Add to Homescreen</button>
     <script type="text/javascript" src="assets/app.js"></script>
   </body>
 </html>
