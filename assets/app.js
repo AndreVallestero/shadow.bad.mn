@@ -15,13 +15,13 @@ randomDelaySlider.addEventListener("input", () => {
     randomDelayValue.textContent = randomDelaySlider.value + "ms";
 });
 
-// JavaScript in your HTML file or in an external script
-let deferredPrompt;
+startButton.addEventListener("click", start);
+canvas.addEventListener("click", end);
 
+let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  // Display a button or UI element to trigger the prompt
   showInstallButton();
 });
 
@@ -42,4 +42,97 @@ function showInstallButton() {
       }
     });
   }
+}
+
+const audio = [
+  new Audio('assets/audio/front-left.mp3'),
+  new Audio('assets/audio/front.mp3'),
+  new Audio('assets/audio/front-right.mp3'),
+  new Audio('assets/audio/left.mp3'),
+  new Audio('assets/audio/center.mp3'),
+  new Audio('assets/audio/right.mp3'),
+  new Audio('assets/audio/back-left.mp3'),
+  new Audio('assets/audio/back.mp3'),
+  new Audio('assets/audio/back-right.mp3'),
+]
+const whistleAudio = new Audio('assets/audio/end.mp3');
+const calloutText = ["FL", "F", "FR", "L", "C", "R", "BL", "B", "BR"];
+
+let running = false;
+let endTime, countdown, countdownInterval;
+const context = canvas.getContext('2d');
+function start() {
+  running = true;
+  canvas.style.display = 'block';
+  endTime = new Date().getTime() + parseInt(timeLimitSlider.value) * 1000;
+  countdown = 1 + parseInt(countdownSlider.value);
+  countdownLoop();
+  if (countdown > 0 && running) countdownInterval = setInterval(countdownLoop, 1000);
+}
+
+function countdownLoop() {
+  if (!running) return clearInterval(countdownInterval)
+  if (--countdown == 0) {
+    clearInterval(countdownInterval);
+    if (startEndWhistleCheckbox.checked) whistleAudio.play();
+    setTimeout(calloutLoop, 1000);
+  } 
+
+  // clear screen
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  context.fillStyle = "#000";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+
+  // draw text
+  const fontSize = Math.min(canvas.width, canvas.height) / 2;
+  context.font = fontSize + "px sans-serif";
+  context.fillStyle = "#fff";
+  context.textAlign = "center";
+  context.fillText(countdown, canvas.width / 2, canvas.height / 2 + fontSize / 2);
+}
+
+function calloutLoop() {
+  if (!running) return
+  if (new Date().getTime() > endTime) {
+    if (startEndWhistleCheckbox.checked) whistleAudio.play();
+    return end();
+  }
+
+  // schedule next loop
+  const interval = parseInt(intervalSlider.value);
+  const randomDelay = Math.floor(Math.random() * parseInt(randomDelaySlider.value));
+  setTimeout(calloutLoop, interval + randomDelay);
+
+  const callout = Math.floor(Math.random() * 9);
+
+  // play sound
+  if (textToSpeechCheckbox.checked) audio[callout].play();
+  
+  // clear old rect
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  context.fillStyle = "#000";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+
+  // show new rect
+  const squareWidth = canvas.width / 3;
+  const squareHeight = canvas.height / 3;
+  const xOffset = squareWidth * (callout % 3);
+  const yOffset = squareHeight * Math.floor(callout / 3)
+  const hue = 45 * callout;
+  context.fillStyle = `hsl(${hue},100%,50%)`;
+	context.fillRect(xOffset, yOffset, squareWidth, squareHeight);
+
+  // draw text
+  const fontSize = Math.min(canvas.width, canvas.height) / 6;
+  context.font = fontSize + "px sans-serif";
+  context.fillStyle = "#000";
+  context.textAlign = "center";
+  context.fillText(calloutText[callout], xOffset + squareWidth / 2, yOffset + squareHeight / 1.5);
+}
+
+function end() {
+  running = false
+  canvas.style.display = 'none';
 }
