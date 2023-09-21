@@ -122,7 +122,7 @@ function calloutLoop() {
   const squareHeight = canvas.height / 3;
   const xOffset = squareWidth * (callout % 3);
   const yOffset = squareHeight * Math.floor(callout / 3)
-  const hue = 45 * callout;
+  const hue = 40 * callout;
   context.fillStyle = `hsl(${hue},100%,50%)`;
 	context.fillRect(xOffset, yOffset, squareWidth, squareHeight);
 
