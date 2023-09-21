@@ -108,7 +108,9 @@ function calloutLoop() {
   setTimeout(calloutLoop, totalDelay);
   setTimeout(clearCanvas, totalDelay * .8);
 
-  const callout = Math.floor(Math.random() * 9);
+  // pick callout, disable center by default
+  let callout = Math.floor(Math.random() * 9);
+  while (callout == 4) callout = Math.floor(Math.random() * 9);
 
   // play sound
   if (textToSpeechCheckbox.checked) audio[callout].play();
