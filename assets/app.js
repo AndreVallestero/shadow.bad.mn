@@ -90,7 +90,7 @@ function countdownLoop() {
   context.fillStyle = "#fff";
   context.textAlign = "center";
   const countdownText = countdown > 0 ? countdown : "GO";
-  context.fillText(countdownText, canvas.width / 2, canvas.height / 2 + fontSize / 2);
+  context.fillText(countdownText, canvas.width / 2, canvas.height / 2 + fontSize / 3);
 }
 
 function calloutLoop() {
@@ -130,7 +130,7 @@ function calloutLoop() {
   context.font = fontSize + "px sans-serif";
   context.fillStyle = "#000";
   context.textAlign = "center";
-  context.fillText(calloutText[callout], xOffset + squareWidth / 2, yOffset + squareHeight / 1.5);
+  context.fillText(calloutText[callout], xOffset + squareWidth / 2, yOffset + squareHeight / 1.55);
 }
 
 function end() {
